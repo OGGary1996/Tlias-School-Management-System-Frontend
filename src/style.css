@@ -1,0 +1,13 @@
+#app{
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+/* 防止dialog弹出时页面偏移的解决方案 */
+/* Element Plus Dialog 特定优化 */
+.el-popup-parent--hidden {
+  /* 覆盖Element Plus的默认行为，保持滚动条 */
+  overflow-y: scroll !important;
+  /* 防止右边距变化 */
+  padding-right: 0 !important;
+}
