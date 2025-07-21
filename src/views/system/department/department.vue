@@ -24,13 +24,12 @@
   });
 
 
+  // 新增部门部分
   // 由于需要复用dialog框（新增与编辑），所以dialog的title的内容需要动态调整
   const dialogTitle = ref('');
   // Define a reactive variable for the dialog visibility
   const dialogFormVisible = ref(false); // Controls the visibility of the dialog
 
-
-  // 新增部门部分
   // 定义新增部门的表单数据
   const departmentForm = ref({
     id: null, // 初始值为null，新增&回显时不需要id,修改时需要传入id
