@@ -146,6 +146,7 @@
         type: 'success'
       });
       deleteDialogVisible.value = false; // Close the delete confirmation dialog
+      deleteId.value = null; // Clear the ID after deletion
       await showAllDepartments(); // Refresh the department list
     } else {
       ElMessage.error('Department deletion failed: ' + result.message);

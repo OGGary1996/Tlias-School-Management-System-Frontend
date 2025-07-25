@@ -145,6 +145,7 @@ const confirmDelete = async () => {
       type: 'success'
     });
     deleteDialogVisible.value = false; // 关闭删除对话框
+    positionToBeDeleted.value = null; // 清空要删除的职位id
     await showAllPositions(); // 刷新职位列表
   } else { // 如果删除失败
     ElMessage.error('Position deletion failed: ' + result.message);
