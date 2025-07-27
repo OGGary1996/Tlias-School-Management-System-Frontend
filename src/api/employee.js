@@ -26,3 +26,8 @@ export { getEmployeeById, updateEmployee };
 const deleteEmployee = (ids) => request.delete(`/employees?ids=${ids}`);
 // 导出函数
 export { deleteEmployee };
+
+// 定义获取所有员工的函数，用于clazz中的下拉框
+const getAllEmployees = () => request.get('/employees/all');
+// 导出函数
+export { getAllEmployees };

@@ -233,6 +233,32 @@ const deleteEmployeeHistory = (index) => {
   employeeForm.value.employeeHistoryUpdateDTOList.splice(index, 1);
 }
 
+// 定义响应式变量与函数，用于点击新增按钮打开dialog
+const openCreateDialog = async () => {
+  dialogTitle.value = 'Create Employee';
+  // 重置表单数据
+  employeeForm.value ={
+    username: '',
+    name: '',
+    gender: '',
+    phone: '',
+    jobTitle: '',
+    salary: '',
+    departmentId: '',
+    entryDate: '',
+    image: '',
+    employeeHistoryUpdateDTOList:[]
+  };
+  // 将验证规则重置,
+  if(elFormRef.value){  // 确保此时DOM已经完全渲染
+    elFormRef.value.clearValidate();
+  }
+  // 获取到职位和部门列表
+  await fetchPositionList();
+  await fetchDepartmentList();
+  dialogVisible.value = true;
+};
+
 // 定义确认按钮的事件处理函数
 // 流程：1.表单验证，2.发起请求，3.获取结果并进行判断，4.如果成功，则显示消息、清空表单项和验证、关闭dialog、刷新显示，5.失败则显示错误消息
 const confirm = () => {
@@ -332,31 +358,6 @@ const cancel = () => {
   dialogVisible.value = false; // 关闭dialog
 };
 
-// 定义响应式变量与函数，用于点击新增按钮打开dialog
-const openCreateDialog = async () => {
-  dialogTitle.value = 'Create Employee';
-  // 重置表单数据
-  employeeForm.value ={
-    username: '',
-    name: '',
-    gender: '',
-    phone: '',
-    jobTitle: '',
-    salary: '',
-    departmentId: '',
-    entryDate: '',
-    image: '',
-    employeeHistoryUpdateDTOList:[]
-  };
-  // 将验证规则重置,
-  if(elFormRef.value){  // 确保此时DOM已经完全渲染
-    elFormRef.value.clearValidate();
-  }
-  // 获取到职位和部门列表
-  await fetchPositionList();
-  await fetchDepartmentList();
-  dialogVisible.value = true;
-};
 
 
 
