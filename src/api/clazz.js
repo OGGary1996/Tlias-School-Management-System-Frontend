@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+// 获取所有的班级列表，用于下拉菜单展示
+const getAllClazzes = () => request.get('/clazzes/all');
+// 获取所有ongoing-and-upcoming状态的班级列表
+const getAllOngoingAndUpcomingClazzes = () => request.get('/clazzes/ongoing-and-upcoming');
+// 导出方法
+export {getAllClazzes, getAllOngoingAndUpcomingClazzes};
+
+
 // 定义条件分页查询的函数
 const getClazzListByCondition = (name,beginDate,endDate,page,pageSize) => request.get(`/clazzes?page=${page}&pageSize=${pageSize}&name=${name}&beginDate=${beginDate}&endDate=${endDate}`);
 // 导出方法

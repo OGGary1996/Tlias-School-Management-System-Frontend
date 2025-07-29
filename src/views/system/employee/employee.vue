@@ -394,17 +394,18 @@ const openEditDialog = async (id) => {
 }
 
 
-
-
 // 删除员工部分：
-// 单个删除部分：
 const deleteDialogVisible = ref(false); // 控制删除对话框的显示
+const deleteDialogTitle = ref(''); // 删除对话框的标题
 const employeeToBeDeleted = ref([]); // 用于存储要删除的员工id
+
+// 单个删除部分：
 // 定义打开删除对话框的函数
 const openDeleteDialog = (id) => {
+  deleteDialogTitle.value = 'Delete Employee';
   // 注意：后端的删除接口为批量删除+单个删除共用，接收的参数为id组成的数组
   // 所以此处需要将id存储到employeeToBeDeleted数组中
-  employeeToBeDeleted.value.push(id);
+  employeeToBeDeleted.value = [id]; // 将要删除的员工id存储到数组中
   deleteDialogVisible.value = true; // 打开删除对话框
 }
 
@@ -420,15 +421,15 @@ const handleSelectionChange = (selection) => {
   // 所以：在每次点击复选框时，应该首先清空employeeToBeDeleted数组，然后再将所有选中的行数据的id添加到数组中
   employeeToBeDeleted.value = selection.map(item => item.id);
 };
-// 定义响应式变量与函数，用于批量删除员工的dialog的显示状态
-const batchDeleteDialogVisible = ref(false); // 控制批量删除对话框的显示
+
 // 定义打开批量删除对话框的函数
 const openBatchDeleteDialog = () => {
+ deleteDialogTitle.value = 'Batch Delete Employee';
   if (employeeToBeDeleted.value.length === 0) {
     ElMessage.warning('Please select at least one employee to delete.');
     return;
   }
-  batchDeleteDialogVisible.value = true; // 打开批量删除对话框
+  deleteDialogVisible.value = true; // 打开批量删除对话框
 }
 
 // 单个删除与批量删除共用confirmDelete函数
@@ -441,13 +442,16 @@ const confirmDelete = async () => {
       type: 'success'
     });
     deleteDialogVisible.value = false; // 关闭删除对话框
-    batchDeleteDialogVisible.value = false; // 关闭批量删除对话框
     employeeToBeDeleted.value = []; // 清空要删除的员工id数组
     await fetchEmployeeList(); // 刷新员工列表
   } else {
     ElMessage.error('Employee deletion failed: ' + result.message);
   }
 };
+const cancelDelete = () => {
+  deleteDialogVisible.value = false; // 关闭删除对话框
+  employeeToBeDeleted.value = []; // 清空要删除的员工id数组
+}
 
 </script>
 
@@ -503,7 +507,9 @@ const confirmDelete = async () => {
         </el-table-column>
         <el-table-column label="Gender" width="100px" align="center">
           <template #default="scope">
-            {{scope.row.gender === 0 ? 'Female' : 'Male'}}
+            <span v-if="scope.row.gender=== 0">Female</span>
+            <span v-else-if="scope.row.gender=== 1">Male</span>
+            <span v-else>Not Specify</span>
           </template>
         </el-table-column>
         <el-table-column prop="jobTitle" label="Job Title" width="220px" align="center"></el-table-column>
@@ -554,9 +560,9 @@ const confirmDelete = async () => {
             <el-col :span="12">
               <el-form-item label="Gender" prop="gender">
                 <el-select v-model="employeeForm.gender">
-                  <el-option value="" label="Not Specify"></el-option>
-                  <el-option value="0" label="Female"></el-option>
-                  <el-option value="1" label="Male"></el-option>
+                  <el-option :value="null" label="Not Specify"></el-option>
+                  <el-option :value="0" label="Female"></el-option>
+                  <el-option :value="1" label="Male"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -673,22 +679,11 @@ const confirmDelete = async () => {
     <div class="delete-dialog">
       <el-dialog title="Delete Employee" v-model="deleteDialogVisible" width="50%" center >
         <span>
-          Are you sure you want to delete this position? This action cannot be undone.
+          Are you sure you want to delete this employee? This action cannot be undone.
         </span>
         <template #footer>
           <el-button type="danger" @click="confirmDelete"><el-icon><delete-filled /></el-icon>&nbsp;Delete</el-button>
-          <el-button @click="deleteDialogVisible = false"><el-icon><Close /></el-icon>&nbsp;Cancel</el-button>
-        </template>
-      </el-dialog>
-    </div>
-    <div class="batch-delete-dialog">
-      <el-dialog title="Delete Employee" v-model="batchDeleteDialogVisible" width="50%" center >
-        <span>
-          Are you sure you want to delete this position? This action cannot be undone.
-        </span>
-        <template #footer>
-          <el-button type="danger" @click="confirmDelete"><el-icon><delete-filled /></el-icon>&nbsp;Delete</el-button>
-          <el-button @click="batchDeleteDialogVisible = false"><el-icon><Close /></el-icon>&nbsp;Cancel</el-button>
+          <el-button @click="cancelDelete"><el-icon><Close /></el-icon>&nbsp;Cancel</el-button>
         </template>
       </el-dialog>
     </div>

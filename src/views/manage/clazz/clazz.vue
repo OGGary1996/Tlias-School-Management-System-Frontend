@@ -485,7 +485,7 @@ const cancelDelete = () => {
     <div class="dialog-container">
       <el-dialog :title="deleteDialogTitle" v-model="deleteDialogVisible" width="50%" center >
         <span>
-          Are you sure you want to delete this position? This action cannot be undone.
+          Are you sure you want to delete this class? This action cannot be undone.
         </span>
         <template #footer>
           <el-button type="danger" @click="confirmDelete"><el-icon><delete-filled /></el-icon>&nbsp;Delete</el-button>
