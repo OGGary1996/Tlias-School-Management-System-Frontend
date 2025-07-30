@@ -66,34 +66,6 @@ const userInfo = ref({
             <el-menu-item index="/home">
               <el-icon><House /></el-icon>Home
             </el-menu-item>
-            <el-sub-menu index="/manage">
-              <template #title>
-                <el-icon><School /></el-icon>Class & Student Management
-              </template>
-              <el-menu-item index="/clazz">
-                <el-icon><HomeFilled /></el-icon>Class Management
-              </el-menu-item>
-              <el-menu-item index="/student">
-                <el-icon><UserFilled /></el-icon>Student Management
-              </el-menu-item>
-              <el-menu-item index="/subject">
-                <el-icon><Platform /></el-icon>Subject Management
-              </el-menu-item>
-            </el-sub-menu>
-            <el-sub-menu index="/system">
-              <template #title>
-                <el-icon><Setting /></el-icon>System Info Management
-              </template>
-              <el-menu-item index="/department">
-                <el-icon><OfficeBuilding /></el-icon>Department Management
-              </el-menu-item>
-              <el-menu-item index="/employee">
-                <el-icon><Avatar /></el-icon>Employee Management
-              </el-menu-item>
-              <el-menu-item index="/position">
-                <el-icon><Suitcase /></el-icon>Position Management
-              </el-menu-item>
-            </el-sub-menu>
             <el-sub-menu index="/analysis">
               <template #title>
                 <el-icon><PieChart /></el-icon>Data Analysis
@@ -108,7 +80,34 @@ const userInfo = ref({
                 <el-icon><Files /></el-icon>Log Analysis
               </el-menu-item>
             </el-sub-menu>
-
+            <el-sub-menu index="/system">
+              <template #title>
+                <el-icon><Setting /></el-icon>Operational Management
+              </template>
+              <el-menu-item index="/department">
+                <el-icon><OfficeBuilding /></el-icon>Department Management
+              </el-menu-item>
+              <el-menu-item index="/employee">
+                <el-icon><Avatar /></el-icon>Employee Management
+              </el-menu-item>
+              <el-menu-item index="/position">
+                <el-icon><Suitcase /></el-icon>Position Management
+              </el-menu-item>
+            </el-sub-menu>
+            <el-sub-menu index="/manage">
+              <template #title>
+                <el-icon><School /></el-icon>Class & Student Management
+              </template>
+              <el-menu-item index="/clazz">
+                <el-icon><HomeFilled /></el-icon>Class Management
+              </el-menu-item>
+              <el-menu-item index="/student">
+                <el-icon><UserFilled /></el-icon>Student Management
+              </el-menu-item>
+              <el-menu-item index="/subject">
+                <el-icon><Platform /></el-icon>Subject Management
+              </el-menu-item>
+            </el-sub-menu>
           </el-menu>
 
         </el-aside>
