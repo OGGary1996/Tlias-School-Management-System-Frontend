@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 主背景 -->
+  <rect width="100%" height="100%" fill="url(#bg1)"/>
+  
+  <!-- 装饰性几何图形 -->
+  <circle cx="200" cy="200" r="150" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="1700" cy="300" r="200" fill="rgba(255,255,255,0.03)"/>
+  <circle cx="300" cy="800" r="120" fill="rgba(255,255,255,0.04)"/>
+  <circle cx="1600" cy="900" r="180" fill="rgba(255,255,255,0.02)"/>
+  
+  <!-- 书本和教育元素的抽象表示 -->
+  <rect x="100" y="400" width="80" height="120" rx="8" fill="rgba(255,255,255,0.06)" transform="rotate(-15 140 460)"/>
+  <rect x="120" y="420" width="80" height="120" rx="8" fill="rgba(255,255,255,0.04)" transform="rotate(-10 160 480)"/>
+  
+  <rect x="1650" y="150" width="60" height="90" rx="6" fill="rgba(255,255,255,0.05)" transform="rotate(20 1680 195)"/>
+  <rect x="1670" y="170" width="60" height="90" rx="6" fill="rgba(255,255,255,0.03)" transform="rotate(25 1700 215)"/>
+  
+  <!-- 学校建筑的抽象轮廓 -->
+  <polygon points="800,100 850,50 900,100 900,200 800,200" fill="rgba(255,255,255,0.04)"/>
+  <rect x="810" y="120" width="15" height="20" fill="rgba(255,255,255,0.03)"/>
+  <rect x="835" y="120" width="15" height="20" fill="rgba(255,255,255,0.03)"/>
+  <rect x="860" y="120" width="15" height="20" fill="rgba(255,255,255,0.03)"/>
+  
+  <!-- 连接线条 -->
+  <path d="M 0,600 Q 400,550 800,600 T 1600,580 L 1920,570 L 1920,1080 L 0,1080 Z" fill="rgba(255,255,255,0.02)"/>
+  
+  <!-- 点装饰 -->
+  <circle cx="500" cy="150" r="3" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="1200" cy="250" r="2" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="400" cy="350" r="2" fill="rgba(255,255,255,0.5)"/>
+  <circle cx="1500" cy="450" r="3" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="200" cy="650" r="2" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="1800" cy="750" r="2" fill="rgba(255,255,255,0.3)"/>
+</svg> 

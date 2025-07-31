@@ -197,6 +197,16 @@ const fetchDepartmentList = async () => {
   }
 };
 
+// 注意：文件上传的请求并没有直接使用统一定义的request方法，所以需要手动添加headers，并添加token，后端会拒绝上传的请求
+// 定义token变量
+const token = ref('');
+// 获取token的方法：
+const getToken = () => {
+  // 获取localStorage中的对象
+  const loginUserObj = JSON.parse((localStorage.getItem('loginUser')));
+  token.value = loginUserObj.token;
+};
+
 // 定义文件上传相关的函数
 const beforeAvatarUpload = (rawFile) => {
   if (rawFile.type !== 'image/jpeg' && rawFile.type !== 'image/png' && rawFile.type !== 'image/jpg') {
@@ -621,6 +631,7 @@ const cancelDelete = () => {
                 <el-upload
                     class="avatar-uploader"
                     action="/api/file/upload/employee/image/oss"
+                    :headers="{Authorization: 'Bearer ' + token}"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload"

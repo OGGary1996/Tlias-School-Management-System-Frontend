@@ -1,496 +1,235 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { 
-  House, 
-  School, 
-  UserFilled, 
-  Avatar, 
-  OfficeBuilding, 
-  PieChart,
-  TrophyBase,
-  Calendar,
-  Bell
-} from '@element-plus/icons-vue'
+import { ref } from 'vue';
 
-// 当前时间和问候语
-const currentTime = ref(new Date())
-const greeting = computed(() => {
-  const hour = currentTime.value.getHours()
-  if (hour < 12) return 'Good Morning'
-  if (hour < 18) return 'Good Afternoon'
-  return 'Good Evening'
-})
+// 从localStorage获取用户信息
+const userInfo = ref(JSON.parse(localStorage.getItem('loginUser') || '{}'));
 
-// 统计数据
-const statistics = ref([
-  {
-    title: 'Total Students',
-    value: 2847,
-    icon: UserFilled,
-    color: '#409EFF',
-    trend: '+12.3%'
-  },
-  {
-    title: 'Total Teachers',
-    value: 156,
-    icon: Avatar,
-    color: '#67C23A',
-    trend: '+5.2%'
-  },
-  {
-    title: 'Active Classes',
-    value: 84,
-    icon: School,
-    color: '#E6A23C',
-    trend: '+8.1%'
-  },
-  {
-    title: 'Departments',
-    value: 12,
-    icon: OfficeBuilding,
-    color: '#F56C6C',
-    trend: '+2.0%'
-  }
-])
-
-// 快速导航
-const quickActions = ref([
-  { name: 'Student Management', path: '/student', icon: UserFilled, color: '#409EFF' },
-  { name: 'Class Management', path: '/clazz', icon: School, color: '#67C23A' },
-  { name: 'Employee Management', path: '/employee', icon: Avatar, color: '#E6A23C' },
-  { name: 'Department Management', path: '/department', icon: OfficeBuilding, color: '#F56C6C' }
-])
-
-// 最新动态
-const recentNews = ref([
-  {
-    title: 'New Semester Registration Opens',
-    content: 'Registration for the 2024 Spring semester is now open for all students.',
-    time: '2 hours ago',
-    type: 'info'
-  },
-  {
-    title: 'Teacher Training Workshop',
-    content: 'Professional development workshop scheduled for next week.',
-    time: '5 hours ago',
-    type: 'success'
-  },
-  {
-    title: 'System Maintenance Notice',
-    content: 'Scheduled maintenance will occur this weekend from 2-4 AM.',
-    time: '1 day ago',
-    type: 'warning'
-  }
-])
-
-// 学期进度
-const semesterProgress = ref(68)
-
-// 更新时间
-onMounted(() => {
-  setInterval(() => {
-    currentTime.value = new Date()
-  }, 1000)
-})
 </script>
 
 <template>
-  <div class="homepage">
-    <!-- 欢迎区域 -->
-    <div class="welcome-section">
-      <div class="welcome-content">
-        <h1 class="welcome-title">
-          <el-icon class="welcome-icon"><TrophyBase /></el-icon>
-          {{ greeting }}, Admin!
-        </h1>
-        <p class="welcome-subtitle">Welcome back to Tlias School Management System</p>
-        <div class="current-time">
-          <el-icon><Calendar /></el-icon>
-          {{ currentTime.toLocaleDateString() }} {{ currentTime.toLocaleTimeString() }}
-        </div>
+  <div class="homepage-container">
+    <!-- 顶部背景图区域 -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <h1>Welcome to Tlias</h1>
+        <p>Your Complete School Management Solution</p>
       </div>
-    </div>
-
-    <!-- 统计卡片区域 -->
-    <div class="statistics-section">
-      <el-row :gutter="20">
-        <el-col :span="6" v-for="stat in statistics" :key="stat.title">
-          <el-card class="stat-card" shadow="hover">
-            <div class="stat-content">
-              <div class="stat-icon" :style="{ backgroundColor: stat.color }">
-                <el-icon size="24"><component :is="stat.icon" /></el-icon>
-              </div>
-              <div class="stat-info">
-                <h3 class="stat-value">{{ stat.value.toLocaleString() }}</h3>
-                <p class="stat-title">{{ stat.title }}</p>
-                <span class="stat-trend" :style="{ color: stat.color }">{{ stat.trend }}</span>
-              </div>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
     </div>
 
     <!-- 主要内容区域 -->
-    <el-row :gutter="20" class="main-content">
-      <!-- 快速导航 -->
-      <el-col :span="12">
-        <el-card class="quick-actions-card" header="Quick Actions">
-          <div class="quick-actions">
-            <div 
-              v-for="action in quickActions" 
-              :key="action.name"
-              class="action-item"
-              @click="$router.push(action.path)"
-            >
-              <div class="action-icon" :style="{ backgroundColor: action.color }">
-                <el-icon size="20"><component :is="action.icon" /></el-icon>
-              </div>
-              <span class="action-name">{{ action.name }}</span>
-            </div>
+    <div class="main-content">
+      <!-- 系统介绍 -->
+      <section class="intro-section">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon">👥</div>
+            <h3>Student Management</h3>
+            <p>Efficiently manage student information, attendance, and academic records</p>
           </div>
-        </el-card>
-      </el-col>
-
-      <!-- 学期进度 -->
-      <el-col :span="12">
-        <el-card class="progress-card" header="Semester Progress">
-          <div class="progress-content">
-            <div class="progress-info">
-              <h3>2024 Spring Semester</h3>
-              <p>{{ semesterProgress }}% Complete</p>
-            </div>
-            <el-progress 
-              :percentage="semesterProgress" 
-              :stroke-width="12"
-              color="#409EFF"
-              class="semester-progress"
-            />
-            <div class="progress-details">
-              <div class="detail-item">
-                <span>Start Date</span>
-                <span>Feb 26, 2024</span>
-              </div>
-              <div class="detail-item">
-                <span>End Date</span>
-                <span>Jun 30, 2024</span>
-              </div>
-            </div>
+          <div class="feature-card">
+            <div class="icon">👨‍🏫</div>
+            <h3>Teacher Management</h3>
+            <p>Handle teacher profiles, schedules, and performance tracking</p>
           </div>
-        </el-card>
-      </el-col>
-    </el-row>
-
-    <!-- 最新动态区域 -->
-    <el-card class="news-card" header="Latest News & Updates">
-      <div class="news-content">
-        <div 
-          v-for="news in recentNews" 
-          :key="news.title"
-          class="news-item"
-        >
-          <div class="news-icon">
-            <el-icon :class="'news-icon-' + news.type"><Bell /></el-icon>
+          <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>Data Analysis</h3>
+            <p>Generate insights with comprehensive analytics and reporting tools</p>
           </div>
-          <div class="news-text">
-            <h4 class="news-title">{{ news.title }}</h4>
-            <p class="news-description">{{ news.content }}</p>
-            <span class="news-time">{{ news.time }}</span>
+          <div class="feature-card">
+            <div class="icon">📚</div>
+            <h3>Course Management</h3>
+            <p>Organize courses, curricula, and academic programs effectively</p>
           </div>
         </div>
-      </div>
-    </el-card>
+      </section>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.homepage {
-  padding: 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: calc(100vh - 140px);
+.homepage-container {
+  min-height: 100vh;
+  background: #f8fafc;
+  overflow-x: hidden;
 }
 
-/* 欢迎区域 */
-.welcome-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 16px;
-  padding: 40px;
-  margin-bottom: 30px;
-  color: white;
+/* 顶部背景图区域 */
+.hero-section {
+  height: 75vh;
+  max-height: 700px;
+  background: url('@/assets/homepage-bg.png') no-repeat center 30%;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
-}
-
-.welcome-title {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-}
-
-.welcome-icon {
-  font-size: 2.5rem;
-  color: #ffd700;
-}
-
-.welcome-subtitle {
-  font-size: 1.2rem;
-  opacity: 0.9;
-  margin-bottom: 20px;
-}
-
-.current-time {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-/* 统计卡片 */
-.statistics-section {
-  margin-bottom: 30px;
-}
-
-.stat-card {
-  border-radius: 12px;
-  border: none;
-  transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-5px);
-}
-
-.stat-content {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.stat-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: white;
+  padding: 0 20px;
+  margin: 0 auto;
+  max-width: 1400px;
+  border-radius: 0 0 30px 30px;
 }
 
-.stat-info {
-  flex: 1;
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, 
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  border-radius: 0 0 30px 30px;
 }
 
-.stat-value {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0 0 5px 0;
-  color: #2c3e50;
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 10vh;
 }
 
-.stat-title {
-  margin: 0 0 5px 0;
-  color: #7f8c8d;
-  font-size: 0.9rem;
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0 0 20px;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.stat-trend {
-  font-size: 0.8rem;
-  font-weight: 600;
+.hero-content p {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* 主要内容区域 */
 .main-content {
-  margin-bottom: 30px;
+  max-width: 1200px;
+  margin: -35vh auto 0;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
 }
 
-.quick-actions-card,
-.progress-card {
-  border-radius: 12px;
-  border: none;
-}
-
-/* 快速导航 */
-.quick-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.action-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px;
-  border-radius: 8px;
-  background: #f8f9fa;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.action-item:hover {
-  background: #e9ecef;
-  transform: translateX(5px);
-}
-
-.action-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.action-name {
-  font-weight: 500;
-  color: #2c3e50;
-}
-
-/* 学期进度 */
-.progress-content {
+/* 系统介绍部分 */
+.intro-section {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.progress-info h3 {
-  margin: 0 0 10px 0;
-  color: #2c3e50;
+.intro-section h2 {
+  font-size: 2.5rem;
+  color: #1f2937;
+  margin-bottom: 16px;
+  font-weight: 700;
 }
 
-.progress-info p {
-  margin: 0 0 20px 0;
-  color: #7f8c8d;
-  font-size: 1.1rem;
+.intro-section > p {
+  font-size: 1.2rem;
+  color: #6b7280;
+  margin-bottom: 50px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.semester-progress {
-  margin-bottom: 20px;
-}
-
-.progress-details {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
-}
-
-.detail-item {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.detail-item span:first-child {
-  color: #7f8c8d;
-  font-size: 0.9rem;
-}
-
-.detail-item span:last-child {
-  color: #2c3e50;
-  font-weight: 500;
-}
-
-/* 最新动态 */
-.news-card {
-  border-radius: 12px;
-  border: none;
-}
-
-.news-content {
-  display: flex;
-  flex-direction: column;
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  margin-top: 20px;
+  padding: 0 20px;
 }
 
-.news-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
+.feature-card {
+  background: white;
+  padding: 24px 15px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.news-item:hover {
-  background: #e9ecef;
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
-.news-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.feature-card .icon {
+  font-size: 2rem;
+  margin-bottom: 15px;
 }
 
-.news-icon-info {
-  background: #409EFF;
-  color: white;
+.feature-card h3 {
+  font-size: 1.1rem;
+  color: #1f2937;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 
-.news-icon-success {
-  background: #67C23A;
-  color: white;
-}
-
-.news-icon-warning {
-  background: #E6A23C;
-  color: white;
-}
-
-.news-text {
-  flex: 1;
-}
-
-.news-title {
-  margin: 0 0 8px 0;
-  color: #2c3e50;
-  font-size: 1rem;
-}
-
-.news-description {
-  margin: 0 0 8px 0;
-  color: #7f8c8d;
+.feature-card p {
+  color: #6b7280;
+  line-height: 1.5;
   font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-.news-time {
-  color: #bdc3c7;
-  font-size: 0.8rem;
 }
 
 /* 响应式设计 */
 @media (max-width: 1200px) {
-  .statistics-section .el-col {
-    margin-bottom: 20px;
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 10px;
   }
 }
 
 @media (max-width: 768px) {
-  .welcome-title {
+  .hero-section {
+    height: 65vh;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .hero-content {
+    padding-bottom: 8vh;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+
+  .main-content {
+    margin-top: -30vh;
+    padding: 0 15px;
+  }
+
+  .intro-section {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+
+  .intro-section h2 {
     font-size: 2rem;
   }
-  
-  .stat-value {
-    font-size: 1.5rem;
-  }
-  
-  .quick-actions {
+
+  .features-grid {
     grid-template-columns: 1fr;
+    padding: 0;
   }
-  
-  .progress-details {
-    flex-direction: column;
-    gap: 10px;
+
+  .feature-card {
+    padding: 20px;
   }
 }
 </style>

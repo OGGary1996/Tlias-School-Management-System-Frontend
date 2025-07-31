@@ -1,9 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import {
-  Finished,
   SwitchButton,
-  Edit,
   School,
   House,
   UserFilled,
@@ -11,11 +9,46 @@ import {
   Setting,
   Avatar, PieChart, Histogram, OfficeBuilding, Orange, Files, Platform, Suitcase
 } from '@element-plus/icons-vue'
+
+
+// 调用useRouter，会返回router的实例对象
+import {useRouter} from 'vue-router';
+// 获取路由实例
+const router = useRouter();
+
+
+
+
 // 用户信息
 const userInfo = ref({
-  name: 'Admin',
-  avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
-})
+  name: '',
+  image: ''
+});
+// 获取用户信息
+const getUserInfo = () => {
+  // 从localStorage中获取用户信息
+  const loginUserObj = JSON.parse(localStorage.getItem('loginUser'));
+  // 如果存在用户信息，则更新userInfo
+  if (loginUserObj){
+    userInfo.value.name = loginUserObj.name;
+    userInfo.value.image = loginUserObj.image || 'https://example.com/default-avatar.png'; // 默认头像
+  }
+}
+// 在组件挂载时获取用户信息
+onMounted(() => {
+  getUserInfo();
+});
+
+
+// 退出登录函数
+const logout = async () => {
+  // 清除localStorage中的用户信息
+  localStorage.removeItem('loginUser');
+  // 跳转到登录页面
+  await router.push('/login');
+};
+
+
 </script>
 
 <template>
@@ -26,31 +59,21 @@ const userInfo = ref({
         <div class="header-content">
           <!-- 左侧系统标题 -->
           <div class="header-left">
-            <el-icon class="logo-icon" size="28">
-              <Finished />
-            </el-icon>
-            <h1 class="system-title">Tlias School Management System</h1>
+            <h1 class="system-title">📚 Tlias School Management System</h1>
           </div>
-          
           <!-- 右侧用户信息和按钮 -->
           <div class="header-right">
             <!-- 用户信息 -->
             <div class="user-info">
               <el-avatar 
-                :src="userInfo.avatar" 
+                :src="userInfo.image"
                 class="user-avatar"
                 :size="32"
               />
               <span class="user-name">{{ userInfo.name }}</span>
             </div>
-            &nbsp;
             <!-- 操作按钮 -->
-            <el-button text class="header-btn">
-              <el-icon><Edit /></el-icon>
-              &nbsp;Change Password
-            </el-button>
-            <span class="divider">|</span>
-            <el-button text class="header-btn logout-btn">
+            <el-button text class="header-btn logout-btn" @click="logout">
               <el-icon><SwitchButton /></el-icon>
               &nbsp;Logout
             </el-button>
