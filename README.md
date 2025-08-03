@@ -33,9 +33,7 @@ To get a local copy up and running, follow these simple steps.
 ### Installation
 
 1.  Clone the repo
-    ```sh
-    git clone https://github.com/your-username/tlias-school-management-system-frontend.git
-    ```
+   
 2.  Install NPM packages
     ```sh
     npm install
